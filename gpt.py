@@ -134,7 +134,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
                 message_text, response_text = process_command(command=command, conversation_history=self.conversation_history)
                 
             
-            self.conversation_history.append()
+            self.conversation_history.append(message_text)
 
             # Display user input in the scrollable area
             user_label = QtWidgets.QLabel(f"Input: {command}")
