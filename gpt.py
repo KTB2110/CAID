@@ -169,9 +169,17 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.command_input = QtWidgets.QLineEdit()
         self.horizontalLayout.addWidget(self.command_input)
     
-        self.execute_button = QtWidgets.QPushButton("Execute")
+        self.execute_button = QtWidgets.QPushButton()
         self.execute_button.clicked.connect(self.execute_command)
-        self.execute_button.setStyleSheet("background-color: lightgray;")  # Set the button background to light gray
+        self.execute_button.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_ArrowRight))
+        self.execute_button.setIconSize(QtCore.QSize(24, 24))  # Set the icon size
+        self.execute_button.setFixedSize(32, 32)  # Set the button to be square
+        self.execute_button.setStyleSheet("""
+            QPushButton {
+                background-color: lightgray;
+                font-weight: bold;
+            }
+        """)
         self.horizontalLayout.addWidget(self.execute_button)
     
         # Create a circular button for image upload
@@ -182,14 +190,20 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.upload_image_button.setStyleSheet("QPushButton { background-color: lightgray; border-radius: 16px; }")  # Set the button background to light gray and make it circular
         self.upload_image_button.clicked.connect(self.upload_image)
         self.horizontalLayout.addWidget(self.upload_image_button)
-    
-        # Add the horizontal layout to the vertical layout
-        self.verticalLayout.addLayout(self.horizontalLayout)
-    
+
         self.undo_button = QtWidgets.QPushButton("Undo")
         self.undo_button.clicked.connect(self.undo_last_command)
-        self.undo_button.setStyleSheet("background-color: lightgray;")  # Set the button background to light gray
-        self.verticalLayout.addWidget(self.undo_button)
+        self.undo_button.setStyleSheet("""
+            QPushButton {
+                background-color: lightgray;
+                color: black;
+                font-weight: bold;
+            }
+        """)
+        self.horizontalLayout.addWidget(self.undo_button)
+        
+        # Add the horizontal layout to the vertical layout
+        self.verticalLayout.addLayout(self.horizontalLayout)
     
         # Container for image thumbnails
         self.image_preview_layout = QtWidgets.QHBoxLayout()
