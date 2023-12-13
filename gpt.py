@@ -74,6 +74,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.setWindowModality(QtCore.Qt.NonModal)  # Set the dialog to be non-modal
         self.init_ui()
         self.conversation_history = []
+        self.image_paths = []
 
     def init_ui(self):
         self.setWindowTitle("Design as a Conversation")
