@@ -50,18 +50,24 @@ def compose_user_image_prompt_content(prompt, base64_images):
     return user_dict
     
 def process_command(command, conversation_history, preprocessed_image_list=None):
-    messages = [{"role": "system", "content": "You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs"}]
-    messages.extend(conversation_history)
     message = None
-    if preprocessed_image_list:
-        base64_images = [encode_image_to_base64(image) for image in preprocessed_image_list]
-        message = compose_user_image_prompt_content(command, base64_images)
-        messages.append(message)
-    else:
-        message = {"role": "user", "type": "text", "content": command}
-        messages.append(message)
-
-    response_text = generate_chat_completion(messages, max_tokens=4000)
+    try:
+        messages = [{"role": "system", "content": "You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs"}]
+        messages.extend(conversation_history)
+        # message = None
+        if preprocessed_image_list:
+            base64_images = [encode_image_to_base64(image) for image in preprocessed_image_list]
+            message = compose_user_image_prompt_content(command, base64_images)
+            messages.append(message)
+        else:
+            message = {"role": "user", "type": "text", "content": command}
+            messages.append(message)
+    
+        response_text = generate_chat_completion(messages, max_tokens=4000)
+    except Exception as e:
+        response = "no response"
+        return message, response
+        
     return message, response_text
 
 def ensure_active_document():
@@ -133,6 +139,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
                 message_text, response_text = process_command(command=command, conversation_history=self.conversation_history, preprocessed_image_list=preprocessed_image_list)
             else:
                 message_text, response_text = process_command(command=command, conversation_history=self.conversation_history)
+                App.Console.PrintMessage(f"Message: {message_text}\n")
                 
             
             self.conversation_history.append(message_text)
@@ -164,6 +171,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
             #     # Execute the generated code in the Python environment
             #     exec(code, {"App": App, "Part": Part, "Base": Base})
 
+            description = "Error occured when accessing the API. Please try again"
             if "```python" in response_text and "\n```" in response_text:
                 # Split the response into description, code, and any text after the code
                 parts = response_text.split("```python")
