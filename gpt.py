@@ -108,43 +108,42 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.image_paths = []
 
     def init_ui(self):
-        self.setWindowTitle("Design as a Conversation")
-        self.resize(600, 400)
-        self.setWindowFlags(self.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint | QtCore.Qt.WindowMinimizeButtonHint)  # Remove question mark and add minimize button
+        # self.setWindowTitle("Design as a Conversation")
+        # self.resize(600, 400)
+        # self.setWindowFlags(self.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint | QtCore.Qt.WindowMinimizeButtonHint)  # Remove question mark and add minimize button
 
-        self.verticalLayout = QtWidgets.QVBoxLayout(self)
+        # self.verticalLayout = QtWidgets.QVBoxLayout(self)
 
-        self.scroll_area = QtWidgets.QScrollArea()
-        self.scroll_area.setWidgetResizable(True)
-        self.verticalLayout.addWidget(self.scroll_area)
+        # self.scroll_area = QtWidgets.QScrollArea()
+        # self.scroll_area.setWidgetResizable(True)
+        # self.verticalLayout.addWidget(self.scroll_area)
 
-        self.scroll_widget = QtWidgets.QWidget()
-        self.scroll_area.setWidget(self.scroll_widget)
-        self.scroll_layout = QtWidgets.QVBoxLayout(self.scroll_widget)
+        # self.scroll_widget = QtWidgets.QWidget()
+        # self.scroll_area.setWidget(self.scroll_widget)
+        # self.scroll_layout = QtWidgets.QVBoxLayout(self.scroll_widget)
 
-        self.label = QtWidgets.QLabel("Describe your part:")
-        self.verticalLayout.addWidget(self.label)
+        # self.label = QtWidgets.QLabel("Describe your part:")
+        # self.verticalLayout.addWidget(self.label)
 
-        self.command_input = QtWidgets.QLineEdit()
-        self.verticalLayout.addWidget(self.command_input)
+        # self.command_input = QtWidgets.QLineEdit()
+        # self.verticalLayout.addWidget(self.command_input)
 
-        self.execute_button = QtWidgets.QPushButton("Execute")
-        self.execute_button.clicked.connect(self.execute_command)
-        self.verticalLayout.addWidget(self.execute_button)
+        # self.execute_button = QtWidgets.QPushButton("Execute")
+        # self.execute_button.clicked.connect(self.execute_command)
+        # self.verticalLayout.addWidget(self.execute_button)
 
-        self.undo_button = QtWidgets.QPushButton("Undo")
-        self.undo_button.clicked.connect(self.undo_last_command)
-        self.verticalLayout.addWidget(self.undo_button)
+        # self.undo_button = QtWidgets.QPushButton("Undo")
+        # self.undo_button.clicked.connect(self.undo_last_command)
+        # self.verticalLayout.addWidget(self.undo_button)
 
-        # Add a button to upload images
-        self.upload_image_button = QtWidgets.QPushButton("Upload Image")
-        self.upload_image_button.clicked.connect(self.upload_image)
-        self.verticalLayout.addWidget(self.upload_image_button)
+        # # Add a button to upload images
+        # self.upload_image_button = QtWidgets.QPushButton("Upload Image")
+        # self.upload_image_button.clicked.connect(self.upload_image)
+        # self.verticalLayout.addWidget(self.upload_image_button)
 
-        # Container for image thumbnails
-        self.image_preview_layout = QtWidgets.QHBoxLayout()
-        self.verticalLayout.addLayout(self.image_preview_layout)
-
+        # # Container for image thumbnails
+        # self.image_preview_layout = QtWidgets.QHBoxLayout()
+        # self.verticalLayout.addLayout(self.image_preview_layout)
         self.setWindowTitle("Design as a Conversation")
         self.resize(600, 400)
         self.setStyleSheet("background-color: black; color: white;")  # Set background and text color
