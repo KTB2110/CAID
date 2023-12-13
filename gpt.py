@@ -50,7 +50,7 @@ def compose_user_image_prompt_content(prompt, base64_images):
     return user_dict
     
 def process_command(command, conversation_history, preprocessed_image_list=None):
-    message = None
+    messages = None
     try:
         messages = [{"role": "system", "content": "You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs"}]
         messages.extend(conversation_history)
@@ -60,13 +60,12 @@ def process_command(command, conversation_history, preprocessed_image_list=None)
             message = compose_user_image_prompt_content(command, base64_images)
             messages.append(message)
         else:
-            message = {"role": "user", "type": "text", "content": command}
+            message = {"role": "user", "content": command}
             messages.append(message)
     
         response_text = generate_chat_completion(messages, max_tokens=4000)
     except Exception as e:
-        response = "no response"
-        return message, response
+        return str(messages), str(e)
         
     return message, response_text
 
