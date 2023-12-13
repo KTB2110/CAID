@@ -27,7 +27,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.conversation_history = []
 
     def init_ui(self):
-        self.setWindowTitle("GPT4FreeCAD Input")
+        self.setWindowTitle("Design as a Conversation")
         self.resize(600, 400)
         self.setWindowFlags(self.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint | QtCore.Qt.WindowMinimizeButtonHint)  # Remove question mark and add minimize button
 
