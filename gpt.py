@@ -211,7 +211,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
                 # Print the code in the console
                 gpt_label = QtWidgets.QLabel(f"GPT4")
                 gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
-                gpt_command = QtWidgets.QLabel(f"{description}\n\nI have added the code in the console.\nLet me know if you have any further questions!")
+                gpt_command = QtWidgets.QLabel(f"{description}\nI have added the code in the console.\nLet me know if you have any further questions!")
                 gpt_command.setFont(QtGui.QFont("Arial", 9))
                 self.scroll_layout.addWidget(gpt_label)
                 self.scroll_layout.addWidget(gpt_command)
