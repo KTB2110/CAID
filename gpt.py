@@ -220,7 +220,14 @@ class GPTCommandDialog(QtWidgets.QDialog):
 
                 # Execute the generated code in the Python environment
                 exec(code, {"App": App, "Part": Part, "Base": Base})
-            
+            else:
+                gpt_label = QtWidgets.QLabel(f"GPT4")
+                gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
+                gpt_command = QtWidgets.QLabel(f"{response_text}")
+                gpt_command.setFont(QtGui.QFont("Arial", 9))
+                self.scroll_layout.addWidget(gpt_label)
+                self.scroll_layout.addWidget(gpt_command)
+                App.Console.PrintMessage(f"No Code Was Generated\n")
            
         
         except Exception as e:
