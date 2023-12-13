@@ -168,14 +168,15 @@ class GPTCommandDialog(QtWidgets.QDialog):
     
         self.execute_button = QtWidgets.QPushButton("Execute")
         self.execute_button.clicked.connect(self.execute_command)
+        self.execute_button.setStyleSheet("background-color: lightgray;")  # Set the button background to light gray
         self.horizontalLayout.addWidget(self.execute_button)
     
         # Create a circular button for image upload
         self.upload_image_button = QtWidgets.QPushButton()
-        self.upload_image_button.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_FileIcon))
+        self.upload_image_button.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_DirOpenIcon))
         self.upload_image_button.setIconSize(QtCore.QSize(24, 24))  # Adjust icon size as needed
         self.upload_image_button.setFixedSize(32, 32)  # Adjust button size as needed
-        self.upload_image_button.setStyleSheet("QPushButton { border-radius: 16px; }")  # Make button circular
+        self.upload_image_button.setStyleSheet("QPushButton { background-color: lightgray; border-radius: 16px; }")  # Set the button background to light gray and make it circular
         self.upload_image_button.clicked.connect(self.upload_image)
         self.horizontalLayout.addWidget(self.upload_image_button)
     
@@ -184,6 +185,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
     
         self.undo_button = QtWidgets.QPushButton("Undo")
         self.undo_button.clicked.connect(self.undo_last_command)
+        self.undo_button.setStyleSheet("background-color: lightgray;")  # Set the button background to light gray
         self.verticalLayout.addWidget(self.undo_button)
     
         # Container for image thumbnails
