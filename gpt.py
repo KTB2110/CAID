@@ -282,7 +282,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
                 
                 gpt_command = QtWidgets.QLabel(f"{description}I have added the code in the console.\nLet me know if you have any further questions!")
                 gpt_command.setFont(QtGui.QFont("Arial", 9))
-                gpt_command.setStyleSheet("color: rgb(0, 128, 0);")
+                gpt_command.setStyleSheet("color: rgb(0, 156, 0);")
                 gpt_command.setWordWrap(True)
                 self.scroll_layout.addWidget(gpt_command)
                 
@@ -293,12 +293,12 @@ class GPTCommandDialog(QtWidgets.QDialog):
             else:
                 gpt_label = QtWidgets.QLabel(f"GPT4")
                 gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
-                gpt_label.setStyleSheet("color: rgb(0, 128, 0);")
+                gpt_label.setStyleSheet("color: rgb(0, 156, 0);")
                 self.scroll_layout.addWidget(gpt_label)
                 
                 gpt_command = QtWidgets.QLabel(f"{response_text}")
                 gpt_command.setFont(QtGui.QFont("Arial", 9))
-                gpt_command.setStyleSheet("color: rgb(0, 128, 0);")
+                gpt_command.setStyleSheet("color: rgb(0, 156, 0);")
                 gpt_command.setWordWrap(True)
                 self.scroll_layout.addWidget(gpt_command)
                 
