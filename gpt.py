@@ -163,7 +163,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
         # Create a horizontal layout for input and buttons
         self.horizontalLayout = QtWidgets.QHBoxLayout()
     
-        self.label = QtWidgets.QLabel("Describe your part:")
+        self.label = QtWidgets.QLabel("What do you want help with?")
         self.verticalLayout.addWidget(self.label)
     
         self.command_input = QtWidgets.QLineEdit()
