@@ -3,6 +3,7 @@ import FreeCADGui as Gui
 import Part
 from FreeCAD import Base
 from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2.QtWidgets import QFileDialog
 
 from gpt4_integration import generate_chat_completion
 
@@ -55,6 +56,15 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.undo_button.clicked.connect(self.undo_last_command)
         self.verticalLayout.addWidget(self.undo_button)
 
+        # Add a button to upload images
+        self.upload_image_button = QtWidgets.QPushButton("Upload Image")
+        self.upload_image_button.clicked.connect(self.upload_image)
+        self.verticalLayout.addWidget(self.upload_image_button)
+
+        # Container for image thumbnails
+        self.image_preview_layout = QtWidgets.QHBoxLayout()
+        self.verticalLayout.addLayout(self.image_preview_layout)
+
     def execute_command(self):
         command = self.command_input.text()
         if not command:
@@ -99,7 +109,31 @@ class GPTCommandDialog(QtWidgets.QDialog):
             else:
                 App.Console.PrintError(f"No actions to undo.\n")
 
+    def upload_image(self):
+        # Allow multiple selection of image files
+        file_dialog = QtWidgets.QFileDialog(self)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.ExistingFiles)
+        file_dialog.setNameFilter("Images (*.png *.xpm *.jpg *.jpeg *.bmp *.gif)")
 
+        # Execute the dialog and check if the user has accepted the selection
+        if file_dialog.exec_() == QtWidgets.QDialog.Accepted:
+            image_files = file_dialog.selectedFiles()
+            self.show_selected_images(image_files)
+
+    def show_selected_images(self, image_files):
+        # Clear the current thumbnails
+        while self.image_preview_layout.count():
+            child = self.image_preview_layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+        for image_file in image_files:
+            pixmap = QtGui.QPixmap(image_file)
+            label = QtWidgets.QLabel()
+            label.setPixmap(pixmap.scaled(64, 64, QtCore.Qt.KeepAspectRatio))  # Resize to thumbnail size
+            self.image_preview_layout.addWidget(label)
+
+        self.image_paths = image_files
 
 
 def show_gpt_command_dialog():
