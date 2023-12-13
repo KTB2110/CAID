@@ -129,7 +129,7 @@ class GPTCommandDialog(QtWidgets.QDialog):
 
             if len(image_list) > 0:
                 preprocessed_image_list = [preprocess_image(image=image) for image in image_list]
-                message_text, response_text = process_command(command=command, conversation_history=self.conversation_history, image_list=preprocessed_image_list)
+                message_text, response_text = process_command(command=command, conversation_history=self.conversation_history, preprocessed_image_list=preprocessed_image_list)
             else:
                 message_text, response_text = process_command(command=command, conversation_history=self.conversation_history)
                 
