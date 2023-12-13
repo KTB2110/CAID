@@ -149,7 +149,14 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.setStyleSheet("background-color: black; color: white;")  # Set background and text color
     
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
-    
+        self.scroll_area = QtWidgets.QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
+        self.verticalLayout.addWidget(self.scroll_area)
+
+        self.scroll_widget = QtWidgets.QWidget()
+        self.scroll_area.setWidget(self.scroll_widget)
+        self.scroll_layout = QtWidgets.QVBoxLayout(self.scroll_widget)
+        
         # Create a horizontal layout for input and buttons
         self.horizontalLayout = QtWidgets.QHBoxLayout()
     
