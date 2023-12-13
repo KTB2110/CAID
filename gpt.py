@@ -78,7 +78,7 @@ If there are images uploaded, analyze the attached image(s), which displays mult
 ​
 Now keeping all this in memory, write FreeCAD code to generate this image in a CAD project.
         """
-        messages = [{"role": "system", "content": "You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs"}]
+        messages = [{"role": "system", "content": system_prompt}]
         messages.extend(conversation_history)
         # message = None
         if preprocessed_image_list:
