@@ -149,16 +149,36 @@ class GPTCommandDialog(QtWidgets.QDialog):
             ensure_active_document()
 
             # Check if the response contains code
+            # if "```python" in response_text and "\n```" in response_text:
+            #     # Split the response into description and code parts
+            #     _, code = response_text.split("```python\n", 1)
+            #     code, _ = code.split("\n```", 1)
+
+            #     # Print the code in the console
+            #     App.Console.PrintMessage(f"{code}\n")
+
+            #     # Execute the generated code in the Python environment
+            #     exec(code, {"App": App, "Part": Part, "Base": Base})
+
             if "```python" in response_text and "\n```" in response_text:
-                # Split the response into description and code parts
-                _, code = response_text.split("```python\n", 1)
-                code, _ = code.split("\n```", 1)
+                # Split the response into description, code, and any text after the code
+                parts = response_text.split("```python")
+                description = parts[0]  # Text before the code block
+            
+                # Further split the second part to separate the code from text after the code block
+                code_with_after_text = parts[1].split("\n```", 1)
+                code = code_with_after_text[0]  # The actual code
+                after_text = code_with_after_text[1] if len(code_with_after_text) > 1 else ""  # Text after the code block
 
                 # Print the code in the console
                 App.Console.PrintMessage(f"{code}\n")
 
                 # Execute the generated code in the Python environment
                 exec(code, {"App": App, "Part": Part, "Base": Base})
+            else:
+                description = response_text  # Entire response is considered as description
+                code = ""
+                after_text = ""
 
         
         except Exception as e:
