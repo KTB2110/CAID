@@ -23,7 +23,7 @@ def encode_image_to_base64(preprocessed_image: np.ndarray) -> str:
     encoded_image = base64.b64encode(buffer).decode('utf-8')
     return encoded_image
 
-def compose_user_content(prompt, base64_images):
+def compose_user_image_prompt_content(prompt, base64_images):
 
     user_dict = {}
     user_dict["role"] = "user"
