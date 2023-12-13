@@ -137,9 +137,12 @@ class GPTCommandDialog(QtWidgets.QDialog):
             self.conversation_history.append(message_text)
 
             # Display user input in the scrollable area
-            user_label = QtWidgets.QLabel(f"Input: {command}")
+            user_label = QtWidgets.QLabel(f"USER INPUT")
             user_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
+            user_command = QtWidgets.QLabel(f"{command}")
+            user_command.setFont(QtGui.QFont("Arial", 9))
             self.scroll_layout.addWidget(user_label)
+            self.scroll_layout.addWidget(user_command)
 
             # Scroll to the bottom of the scrollable area
             self.scroll_area.verticalScrollBar().setValue(self.scroll_area.verticalScrollBar().maximum())
@@ -175,11 +178,13 @@ class GPTCommandDialog(QtWidgets.QDialog):
 
                 # Execute the generated code in the Python environment
                 exec(code, {"App": App, "Part": Part, "Base": Base})
-            else:
-                description = response_text  # Entire response is considered as description
-                code = ""
-                after_text = ""
-
+            
+            gpt_label = QtWidgets.QLabel(f"GPT4")
+            gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
+            gpt_command = QtWidgets.QLabel(f"{description}\n\nLet me know if you have any further questions")
+            gpt_command.setFont(QtGui.QFont("Arial", 9))
+            self.scroll_layout.addWidget(gpt_label)
+            self.scroll_layout.addWidget(gpt_command)
         
         except Exception as e:
                         App.Console.PrintError(f"Error: {str(e)}\n")
