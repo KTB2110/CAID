@@ -1,2 +1,2 @@
-from FreeCAD.C-AI-D import gpt
+from FreeCAD.CAID import gpt
 gpt.show_gpt_command_dialog()
