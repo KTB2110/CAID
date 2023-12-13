@@ -145,6 +145,45 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.image_preview_layout = QtWidgets.QHBoxLayout()
         self.verticalLayout.addLayout(self.image_preview_layout)
 
+        self.setWindowTitle("Design as a Conversation")
+        self.resize(600, 400)
+        self.setStyleSheet("background-color: black; color: white;")  # Set background and text color
+    
+        self.verticalLayout = QtWidgets.QVBoxLayout(self)
+    
+        # Create a horizontal layout for input and buttons
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+    
+        self.label = QtWidgets.QLabel("Describe your part:")
+        self.verticalLayout.addWidget(self.label)
+    
+        self.command_input = QtWidgets.QLineEdit()
+        self.horizontalLayout.addWidget(self.command_input)
+    
+        self.execute_button = QtWidgets.QPushButton("Execute")
+        self.execute_button.clicked.connect(self.execute_command)
+        self.horizontalLayout.addWidget(self.execute_button)
+    
+        # Create a circular button for image upload
+        self.upload_image_button = QtWidgets.QPushButton()
+        self.upload_image_button.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_FileIcon))
+        self.upload_image_button.setIconSize(QtCore.QSize(24, 24))  # Adjust icon size as needed
+        self.upload_image_button.setFixedSize(32, 32)  # Adjust button size as needed
+        self.upload_image_button.setStyleSheet("QPushButton { border-radius: 16px; }")  # Make button circular
+        self.upload_image_button.clicked.connect(self.upload_image)
+        self.horizontalLayout.addWidget(self.upload_image_button)
+    
+        # Add the horizontal layout to the vertical layout
+        self.verticalLayout.addLayout(self.horizontalLayout)
+    
+        self.undo_button = QtWidgets.QPushButton("Undo")
+        self.undo_button.clicked.connect(self.undo_last_command)
+        self.verticalLayout.addWidget(self.undo_button)
+    
+        # Container for image thumbnails
+        self.image_preview_layout = QtWidgets.QHBoxLayout()
+        self.verticalLayout.addLayout(self.image_preview_layout)
+
     def execute_command(self):
         command = self.command_input.text()
         if not command:
