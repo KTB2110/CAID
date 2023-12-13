@@ -169,10 +169,10 @@ class GPTCommandDialog(QtWidgets.QDialog):
         self.command_input = QtWidgets.QLineEdit()
         self.horizontalLayout.addWidget(self.command_input)
     
-        self.execute_button = QtWidgets.QPushButton("<RUN>")
+        self.execute_button = QtWidgets.QPushButton()
         self.execute_button.clicked.connect(self.execute_command)
-        # self.execute_button.setIcon(QtGui.QIcon('execute_arrow.png'))  # Path to your image file
-        # self.execute_button.setIconSize(QtCore.QSize(24, 24))  # Set the icon size
+        self.execute_button.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_ArrowRight))
+        self.execute_button.setIconSize(QtCore.QSize(24, 24))
         self.execute_button.setFixedSize(32, 32)  # Set the button to be square
         self.execute_button.setStyleSheet("""
             QPushButton {
