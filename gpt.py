@@ -52,32 +52,35 @@ def compose_user_image_prompt_content(prompt, base64_images):
 def process_command(command, conversation_history, preprocessed_image_list=None):
     messages = None
     try:
-        system_prompt = """
-You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs
+#         system_prompt = """
+# You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs
 
-If there are images uploaded, analyze the attached image(s), which displays multiple objects in a 3D space. The images are the different views of the SAME SET OF OBJECTS. Your task is to understand the 3D positional relationships and constraints between these objects, crucial for creating a CAD model. Follow these guidelines in your understanding:
-​
-1. **Identification of Objects**: Begin by understanding each visible object in the image using simple identifiers like 'Object A', 'Object B', etc.
-​
-2. **Positional Relationships**:
-   - Notice how each object is positioned in relation to the others, with ideas like 'to the left of', 'above', 'behind', etc.
-   - Focus on the orientation of objects, noting if they are parallel, perpendicular, or at specific angles to each other.
-​
-3. **Inferred Constraints**:
-   - Identify any potential CAD constraints such as coincident, concentric, parallel, perpendicular, tangent, distance, symmetric, angular, or fixed constraints.
-​
-4. **Dimensions and Proportional Relationships**:
-   - Estimate the dimensions of each object (height, width, depth).
-   - If possible, use any scale reference in the image to provide more precise measurements.
-​
-5. **Contact and Interaction**:
-   - Note any points where objects are touching, overlapping, or interlocking, and suggest appropriate constraints based on these interactions.
-​
-6. **Special Characteristics**:
-   - Notice observations of any significant curves, rounded edges, or unique geometric features that might influence constraints.
-​
-Now keeping all this in memory, write FreeCAD code to generate this image in a CAD project.
-        """
+# If there are images uploaded, analyze the attached image(s), which displays multiple objects in a 3D space. The images are the different views of the SAME SET OF OBJECTS. Your task is to understand the 3D positional relationships and constraints between these objects, crucial for creating a CAD model. Follow these guidelines in your understanding:
+# ​
+# 1. **Identification of Objects**: Begin by understanding each visible object in the image using simple identifiers like 'Object A', 'Object B', etc.
+# ​
+# 2. **Positional Relationships**:
+#    - Notice how each object is positioned in relation to the others, with ideas like 'to the left of', 'above', 'behind', etc.
+#    - Focus on the orientation of objects, noting if they are parallel, perpendicular, or at specific angles to each other.
+# ​
+# 3. **Inferred Constraints**:
+#    - Identify any potential CAD constraints such as coincident, concentric, parallel, perpendicular, tangent, distance, symmetric, angular, or fixed constraints.
+# ​
+# 4. **Dimensions and Proportional Relationships**:
+#    - Estimate the dimensions of each object (height, width, depth).
+#    - If possible, use any scale reference in the image to provide more precise measurements.
+# ​
+# 5. **Contact and Interaction**:
+#    - Note any points where objects are touching, overlapping, or interlocking, and suggest appropriate constraints based on these interactions.
+# ​
+# 6. **Special Characteristics**:
+#    - Notice observations of any significant curves, rounded edges, or unique geometric features that might influence constraints.
+# ​
+# Now keeping all this in memory, write FreeCAD code to generate this image in a CAD project.
+#         """
+system_prompt = """
+You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs. If the user has uploaded image(s), then you will look at the image(s) and write FreeCAD code that would create a 3d model of the image in FreeCAD.
+"""
         messages = [{"role": "system", "content": system_prompt}]
         messages.extend(conversation_history)
         # message = None
