@@ -237,9 +237,11 @@ class GPTCommandDialog(QtWidgets.QDialog):
             # Display user input in the scrollable area
             user_label = QtWidgets.QLabel(f"USER INPUT")
             user_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
+            self.scroll_layout.addWidget(user_label)
+            
             user_command = QtWidgets.QLabel(f"{command}")
             user_command.setFont(QtGui.QFont("Arial", 9))
-            self.scroll_layout.addWidget(user_label)
+            user_command.setWordWrap(True)
             self.scroll_layout.addWidget(user_command)
 
             # Scroll to the bottom of the scrollable area
@@ -275,9 +277,11 @@ class GPTCommandDialog(QtWidgets.QDialog):
                 # Print the code in the console
                 gpt_label = QtWidgets.QLabel(f"GPT4")
                 gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
+                self.scroll_layout.addWidget(gpt_label)
+                
                 gpt_command = QtWidgets.QLabel(f"{description}\nI have added the code in the console.\nLet me know if you have any further questions!")
                 gpt_command.setFont(QtGui.QFont("Arial", 9))
-                self.scroll_layout.addWidget(gpt_label)
+                gpt_command.setWordWrap(True)
                 self.scroll_layout.addWidget(gpt_command)
                 
                 App.Console.PrintMessage(f"{code}\n")
@@ -287,10 +291,13 @@ class GPTCommandDialog(QtWidgets.QDialog):
             else:
                 gpt_label = QtWidgets.QLabel(f"GPT4")
                 gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
+                self.scroll_layout.addWidget(gpt_label)
+                
                 gpt_command = QtWidgets.QLabel(f"{response_text}")
                 gpt_command.setFont(QtGui.QFont("Arial", 9))
-                self.scroll_layout.addWidget(gpt_label)
+                gpt_command.setWordWrap(True)
                 self.scroll_layout.addWidget(gpt_command)
+                
                 App.Console.PrintMessage(f"No Code Was Generated\n")
            
         
