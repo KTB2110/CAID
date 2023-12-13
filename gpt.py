@@ -78,9 +78,9 @@ def process_command(command, conversation_history, preprocessed_image_list=None)
 # ​
 # Now keeping all this in memory, write FreeCAD code to generate this image in a CAD project.
 #         """
-system_prompt = """
-You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs. If the user has uploaded image(s), then you will look at the image(s) and write FreeCAD code that would create a 3d model of the image in FreeCAD.
-"""
+        system_prompt = """
+        You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs. If the user has uploaded image(s), then you will look at the image(s) and write FreeCAD code that would create a 3d model of the image in FreeCAD.
+        """
         messages = [{"role": "system", "content": system_prompt}]
         messages.extend(conversation_history)
         # message = None
