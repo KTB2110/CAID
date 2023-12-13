@@ -4,17 +4,65 @@ import Part
 from FreeCAD import Base
 from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtWidgets import QFileDialog
+from PIL import Image
+import base64
+import numpy as np
+import cv2
 
 from gpt4_integration import generate_chat_completion
 
+def preprocess_image(image: np.ndarray) -> np.ndarray:
+    image = np.fliplr(image)
+    return cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-def process_command(command, conversation_history):
+def encode_image_to_base64(preprocessed_image: np.ndarray) -> str:
+    success, buffer = cv2.imencode('.jpg', preprocessed_image)
+    if not success:
+        raise ValueError("Could not encode image to JPEG format.")
+
+    encoded_image = base64.b64encode(buffer).decode('utf-8')
+    return encoded_image
+
+def compose_user_content(prompt, base64_images):
+
+    user_dict = {}
+    user_dict["role"] = "user"
+
+    content = []
+    content.append(
+        {
+        "type": "text",
+        "text": prompt
+        }
+    )
+
+    for base64_image in base64_images:
+      content.append(
+          {
+              "type": "image_url",
+              "image_url": {
+                  "url": f"data:image/jpeg;base64,{base64_image}"
+              }
+          }
+      )
+
+    user_dict["content"] = content
+    return user_dict
+    
+def process_command(command, conversation_history, preprocessed_image_list=None):
     messages = [{"role": "system", "content": "You are a FreeCAD scripter. You will output and execute the Python code for the shape the user inputs"}]
     messages.extend(conversation_history)
-    messages.append({"role": "user", "content": command})
+    message = None
+    if preprocessed_image_list:
+        base64_images = [encode_image_to_base64(image) for image in preprocessed_image_list]
+        message = compose_user_image_prompt_content(command, base64_images)
+        messages.append(message)
+    else:
+        message = {"role": "user", "type": "text", "content": command}
+        messages.append(message)
 
     response_text = generate_chat_completion(messages, max_tokens=4000)
-    return response_text
+    return message, response_text
 
 def ensure_active_document():
     if not App.ActiveDocument:
@@ -72,8 +120,21 @@ class GPTCommandDialog(QtWidgets.QDialog):
             return
 
         try:
-            response_text = process_command(command, self.conversation_history)
-            self.conversation_history.append({"role": "user", "content": command})
+            image_list = []
+            if len(self.image_paths) > 0:
+                for filename in self.image_paths:
+                    img = Image.open(filename)
+                    image_list.append(img)
+
+
+            if len(image_list) > 0:
+                preprocessed_image_list = [preprocess_image(image=image) for image in image_list]
+                message_text, response_text = process_command(command=command, conversation_history=self.conversation_history, image_list=preprocessed_image_list)
+            else:
+                message_text, response_text = process_command(command=command, conversation_history=self.conversation_history)
+                
+            
+            self.conversation_history.append()
 
             # Display user input in the scrollable area
             user_label = QtWidgets.QLabel(f"Input: {command}")
@@ -98,6 +159,8 @@ class GPTCommandDialog(QtWidgets.QDialog):
 
                 # Execute the generated code in the Python environment
                 exec(code, {"App": App, "Part": Part, "Base": Base})
+
+        
         except Exception as e:
                         App.Console.PrintError(f"Error: {str(e)}\n")
             
