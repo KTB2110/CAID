@@ -182,17 +182,19 @@ class GPTCommandDialog(QtWidgets.QDialog):
                 after_text = code_with_after_text[1] if len(code_with_after_text) > 1 else ""  # Text after the code block
 
                 # Print the code in the console
+                gpt_label = QtWidgets.QLabel(f"GPT4")
+                gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
+                gpt_command = QtWidgets.QLabel(f"{description}\n\nLet me know if you have any further questions")
+                gpt_command.setFont(QtGui.QFont("Arial", 9))
+                self.scroll_layout.addWidget(gpt_label)
+                self.scroll_layout.addWidget(gpt_command)
+                
                 App.Console.PrintMessage(f"{code}\n")
 
                 # Execute the generated code in the Python environment
                 exec(code, {"App": App, "Part": Part, "Base": Base})
             
-            gpt_label = QtWidgets.QLabel(f"GPT4")
-            gpt_label.setFont(QtGui.QFont("Arial", 9, QtGui.QFont.Bold))
-            gpt_command = QtWidgets.QLabel(f"{description}\n\nLet me know if you have any further questions")
-            gpt_command.setFont(QtGui.QFont("Arial", 9))
-            self.scroll_layout.addWidget(gpt_label)
-            self.scroll_layout.addWidget(gpt_command)
+           
         
         except Exception as e:
                         App.Console.PrintError(f"Error: {str(e)}\n")
